@@ -1,0 +1,295 @@
+<!doctype html>
+<!-- Petr's Czech guide to the admin ("Správa webu"). Published on GitHub Pages by navod/zverejni-navod.sh as
+     https://tastybebe.github.io/hajek-architekti-navod/ (public link, search engines asked to stay away, no password
+     in it: Albert sends the password separately). The pictures in img/ come from navod/snimky.mjs. The address
+     89-221-215-53.sslip.io is the WEDOS server (nasazeni/README.md); after the launch it becomes hajekarchitekti.cz. -->
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Jak si sami upravíte web · Petr Hájek ARCHITEKTI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap">
+<style>
+/* One reading column of numbered steps, each with its picture; three short rules and a contents list on top. */
+:root {
+  --bg: #f6f6f4;
+  --plocha: #ffffff;
+  --text: #17181a;
+  --text-2: #55585e;
+  --linka: #e2e2de;
+  --akcent: #1f5fd1;
+  --znacka: #eef1f6;
+  --oranzova: #ff6b1a;
+  --font-text: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-nadpis: "Space Grotesk", "Inter", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #111214; --plocha: #1a1b1e; --text: #ececea; --text-2: #a4a7ad; --linka: #2c2e33; --akcent: #7aa7ff; --znacka: #23262c; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 17px/1.62 var(--font-text);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 44px 80px;
+}
+.obal { max-width: 880px; margin: 0 auto; display: grid; gap: 44px; }
+h1, h2, h3 { font-family: var(--font-nadpis); text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: clamp(32px, 5.4vw, 46px); font-weight: 600; letter-spacing: -0.02em; }
+h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; }
+h3 { font-size: 18px; font-weight: 600; }
+p { margin: 0; max-width: 66ch; }
+a { color: var(--akcent); }
+.uvod { display: grid; gap: 14px; }
+.uvod p { color: var(--text-2); font-size: 18px; }
+.stitek { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--akcent); }
+.pravidla { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.pravidlo { background: var(--plocha); border: 1px solid var(--linka); border-radius: 14px; padding: 18px 20px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.pravidlo p { color: var(--text-2); font-size: 16px; }
+.pozn { background: var(--znacka); border-radius: 12px; padding: 14px 18px; font-size: 16px; display: flex; gap: 12px; align-items: center; }
+.kruh { flex: none; width: 34px; height: 22px; border-radius: 7px; border: 3px solid var(--oranzova); box-shadow: 0 0 0 4px color-mix(in srgb, var(--oranzova) 28%, transparent); }
+nav.obsah { background: var(--plocha); border: 1px solid var(--linka); border-radius: 14px; padding: 18px 20px; display: grid; gap: 10px; }
+nav.obsah ol { margin: 0; padding-left: 22px; columns: 2 260px; column-gap: 28px; }
+nav.obsah li { margin: 0 0 4px; break-inside: avoid; }
+nav.obsah a { text-decoration: none; }
+nav.obsah a:hover { text-decoration: underline; }
+ol.kroky { list-style: none; margin: 0; padding: 0; display: grid; gap: 56px; counter-reset: krok; }
+ol.kroky > li { counter-increment: krok; display: grid; gap: 16px; scroll-margin-top: 20px; }
+.krok-hlava { display: flex; gap: 14px; align-items: baseline; }
+.krok-hlava::before {
+  content: counter(krok); font-family: var(--font-nadpis); font-weight: 600; font-size: 15px;
+  min-width: 32px; height: 32px; border-radius: 50%; display: inline-grid; place-items: center;
+  background: var(--text); color: var(--bg); flex: none; transform: translateY(-3px);
+}
+ul.body { margin: 0; padding-left: 22px; display: grid; gap: 8px; max-width: 66ch; }
+ul.body li::marker { color: var(--text-2); }
+b { font-weight: 600; }
+.tl { display: inline-block; font-weight: 600; font-size: 0.9em; padding: 1px 9px; border-radius: 999px; background: var(--znacka); border: 1px solid var(--linka); white-space: nowrap; }
+.adresa { font-weight: 600; overflow-wrap: anywhere; }
+.nepovinne { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-2); border: 1px solid var(--linka); border-radius: 999px; padding: 2px 9px; transform: translateY(-3px); }
+figure { margin: 0; display: grid; gap: 8px; min-width: 0; }
+figure a { display: block; border-radius: 12px; }
+figure img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--linka); display: block; background: #000; }
+figure.uzky img { max-width: 560px; }
+figure.stred img { max-width: 640px; }
+figcaption { font-size: 14px; color: var(--text-2); }
+.dvojice { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; align-items: start; }
+.konec { display: grid; gap: 18px; border-top: 1px solid var(--linka); padding-top: 36px; }
+dl { margin: 0; display: grid; gap: 18px; }
+dt { font-weight: 600; }
+dd { margin: 4px 0 0; color: var(--text-2); max-width: 66ch; }
+.paticka { color: var(--text-2); font-size: 15px; }
+@media (max-width: 480px) { body { padding-block: 28px 56px; font-size: 16px; } ol.kroky { gap: 44px; } }
+</style>
+</head>
+<body>
+<div class="obal">
+  <header class="uvod">
+    <span class="stitek">Správa webu · Petr Hájek ARCHITEKTI</span>
+    <h1>Jak si sami upravíte web</h1>
+    <p>Tenhle návod vás provede vším, co ve správě webu zvládnete sami: přidáte nový projekt, napíšete texty, nahrajete fotky a&nbsp;videa, vyberete, co bude na úvodní stránce, a&nbsp;upravíte stránku Ateliér. U&nbsp;každého kroku je obrázek přesně toho, co uvidíte. Projekt „Zkušební dům u&nbsp;lesa“ na obrázcích je jen ukázka.</p>
+  </header>
+
+  <section class="pravidla" aria-label="Co stačí vědět">
+    <div class="pravidlo"><h3>Uložit</h3><p>Uloží vaši práci ve správě. Na webu ji zatím nikdo nevidí, takže můžete v&nbsp;klidu zkoušet.</p></div>
+    <div class="pravidlo"><h3>Zveřejnit</h3><p>Až budete spokojený, klikněte vpravo nahoře na Zveřejnit. Asi za minutu jsou změny na webu.</p></div>
+    <div class="pravidlo"><h3>Nic se nerozbije</h3><p>Každou uloženou změnu vrátí tlačítko Vrátit poslední změnu. Smazaný projekt obnovíte z&nbsp;koše.</p></div>
+  </section>
+
+  <p class="pozn"><span class="kruh" aria-hidden="true"></span><span>Oranžový rámeček na obrázcích ukazuje, kam kliknout nebo co vyplnit. Obrázek zvětšíte kliknutím.</span></p>
+
+  <nav class="obsah" aria-labelledby="obsah-nadpis">
+    <h3 id="obsah-nadpis">Obsah</h3>
+    <ol>
+      <li><a href="#prihlaseni">Přihlaste se</a></li>
+      <li><a href="#novy-projekt">Založte nový projekt</a></li>
+      <li><a href="#texty">Napište texty</a></li>
+      <li><a href="#fotky">Nahrajte fotky</a></li>
+      <li><a href="#video">Přidejte video</a></li>
+      <li><a href="#ulozit">Zapněte projekt a&nbsp;uložte</a></li>
+      <li><a href="#uvodni-pas">Vyberte projekty na úvodní stránku</a></li>
+      <li><a href="#rady">Seřaďte řady na hlavní stránce</a></li>
+      <li><a href="#atelier">Upravte stránku Ateliér</a></li>
+      <li><a href="#zverejnit">Zveřejněte změny</a></li>
+      <li><a href="#oprava">Opravte projekt, který už na webu je</a></li>
+      <li><a href="#telefon">V&nbsp;mobilu</a></li>
+      <li><a href="#kdyz">Když se něco nepovede</a></li>
+    </ol>
+  </nav>
+
+  <ol class="kroky">
+    <li id="prihlaseni">
+      <h2 class="krok-hlava">Přihlaste se</h2>
+      <ul class="body">
+        <li>V&nbsp;prohlížeči otevřete adresu <a class="adresa" href="https://89-221-215-53.sslip.io/sprava/">https://89-221-215-53.sslip.io/sprava/</a>. Funguje na počítači i&nbsp;v mobilu, odkudkoli.</li>
+        <li>Napište heslo a&nbsp;klikněte na <span class="tl">Přihlásit se</span>. Uživatelské jméno se nezadává, stačí heslo. Heslo vám pošleme zvlášť.</li>
+        <li>Prohlížeč si přihlášení může zapamatovat (jako jméno uloží „admin“). Přihlášení vydrží 30 dní od poslední návštěvy.</li>
+        <li>Dokud web neotevřeme pro všechny, chrání stejné heslo i&nbsp;samotný web na <a class="adresa" href="https://89-221-215-53.sslip.io/">https://89-221-215-53.sslip.io/</a>. Po přihlášení ho uvidíte přesně tak, jak ho uvidí návštěvníci.</li>
+        <li>Nahoře najdete části <b>Úvodní pás</b>, <b>Řady</b>, <b>Projekty</b>, <b>Ateliér</b> a <b>Jak na to</b> (krátká nápověda přímo ve správě). Vpravo nahoře je tlačítko <span class="tl">Zveřejnit</span>, nebo nápis <b>Web je aktuální</b>, když na webu nic nečeká.</li>
+        <li>Na cizím počítači se po práci odhlaste: tlačítko <span class="tl">Odhlásit se</span> je dole v&nbsp;části Jak na to.</li>
+      </ul>
+      <div class="dvojice">
+        <figure><a href="img/00-prihlaseni.jpg"><img src="img/00-prihlaseni.jpg" alt="Přihlašovací stránka: pole Heslo a tlačítko Přihlásit se, obojí v oranžovém rámečku" width="1600" height="1000" loading="lazy"></a><figcaption>Stačí heslo a&nbsp;Přihlásit se.</figcaption></figure>
+        <figure><a href="img/01-uvitani.jpg"><img src="img/01-uvitani.jpg" alt="Správa webu po přihlášení: nahoře části správy a vpravo nápis Web je aktuální" width="1600" height="1000" loading="lazy"></a><figcaption>Po přihlášení: nahoře části správy, vpravo stav webu.</figcaption></figure>
+      </div>
+    </li>
+
+    <li id="novy-projekt">
+      <h2 class="krok-hlava">Založte nový projekt</h2>
+      <ul class="body">
+        <li>Klikněte nahoře na <b>Projekty</b> a&nbsp;pak vpravo na <span class="tl">+ Nový projekt</span>.</li>
+        <li>Napište název projektu, vyberte kategorii (Realizace, Projekt, Soutěž nebo Výstava) a&nbsp;klikněte na <span class="tl">Založit projekt</span>.</li>
+        <li>Nový projekt je zatím skrytý. Na webu se objeví, až ho zapnete a&nbsp;zveřejníte (kroky 6 a&nbsp;10).</li>
+      </ul>
+      <div class="dvojice">
+        <figure><a href="img/03-projekty.jpg"><img src="img/03-projekty.jpg" alt="Seznam projektů, vpravo nahoře tlačítko Nový projekt" width="1600" height="1000" loading="lazy"></a><figcaption>Seznam všech projektů s&nbsp;hledáním a&nbsp;filtry.</figcaption></figure>
+        <figure><a href="img/04-novy-projekt.jpg"><img src="img/04-novy-projekt.jpg" alt="Okno Nový projekt: název, kategorie a tlačítko Založit projekt" width="992" height="832" loading="lazy"></a><figcaption>Název a&nbsp;kategorie, ostatní doplníte potom.</figcaption></figure>
+      </div>
+    </li>
+
+    <li id="texty">
+      <h2 class="krok-hlava">Napište texty</h2>
+      <ul class="body">
+        <li>V&nbsp;části <b>Základ</b> vyplňte místo, město a&nbsp;roky. Stačí ty roky, které projekt měl, třeba jen rok realizace. Pod každým polem je krátká nápověda.</li>
+        <li>V&nbsp;části <b>Texty</b> napište <b>perex</b>: jednu větu, která se ukáže pod názvem projektu. Vejde se do ní 110 znaků, počítadlo vidíte vpravo nad polem.</li>
+        <li>Delší <b>popis</b> píšete po odstavcích. Další odstavec přidáte tlačítkem <span class="tl">+ Přidat odstavec</span>.</li>
+        <li>Tvůrce, ocenění a&nbsp;zdroje doplnit můžete, ale nemusíte. Vpravo celou dobu vidíte náhled, jak bude projekt vypadat na webu.</li>
+      </ul>
+      <div class="dvojice">
+        <figure><a href="img/06-zaklad.jpg"><img src="img/06-zaklad.jpg" alt="Část Základ: vyplněné místo, město a rok realizace" width="1600" height="1000" loading="lazy"></a><figcaption>Základ: místo, město a&nbsp;roky.</figcaption></figure>
+        <figure><a href="img/07-texty.jpg"><img src="img/07-texty.jpg" alt="Část Texty: perex s počítadlem znaků, první odstavec popisu a tlačítko Přidat odstavec" width="1600" height="1000" loading="lazy"></a><figcaption>Perex hlídá délku, popis má odstavce.</figcaption></figure>
+      </div>
+    </li>
+
+    <li id="fotky">
+      <h2 class="krok-hlava">Nahrajte fotky</h2>
+      <ul class="body">
+        <li>V&nbsp;části <b>Fotografie</b> klikněte na <span class="tl">Nahrát fotky</span> a&nbsp;vyberte je z&nbsp;počítače nebo z&nbsp;telefonu. Klidně víc najednou (JPG, PNG, WebP i&nbsp;HEIC z&nbsp;iPhonu, každá do 40 MB).</li>
+        <li>První fotka bude hlavní: ukáže se nahoře v&nbsp;projektu i&nbsp;na jeho kartě. Pořadí změníte přetažením.</li>
+        <li>Když na fotku kliknete, napíšete k&nbsp;ní popis a&nbsp;jméno fotografa a&nbsp;vyberete, kde se má ukázat (Titulní, Karta, Plakát). Pak klikněte na <span class="tl">Hotovo</span>.</li>
+        <li>Fotky se ukládají samy, hned jak se nahrají.</li>
+      </ul>
+      <figure><a href="img/08-fotky.jpg"><img src="img/08-fotky.jpg" alt="Část Fotografie se třemi nahranými fotkami a tlačítkem Nahrát fotky" width="1600" height="1000" loading="lazy"></a><figcaption>Tři nahrané fotky. První je titulní a&nbsp;zároveň na kartě.</figcaption></figure>
+      <figure class="stred"><a href="img/09-fotka-detail.jpg"><img src="img/09-fotka-detail.jpg" alt="Okno jedné fotky: kde se ukáže, popis fotky a fotograf" width="1600" height="1220" loading="lazy"></a><figcaption>Po kliknutí na fotku: kde se ukáže, popis a&nbsp;fotograf.</figcaption></figure>
+    </li>
+
+    <li id="video">
+      <h2 class="krok-hlava">Přidejte video <span class="nepovinne">nepovinné</span></h2>
+      <ul class="body">
+        <li><b>Ukázka</b> je krátké video bez zvuku, které se na webu samo rozehraje. Klikněte na <span class="tl">Nahrát ukázku</span> a&nbsp;vyberte video (do 5 minut a&nbsp;400 MB). Pro web ho převedeme sami, chvilku to trvá. Pak vyplňte, kdo video natočil.</li>
+        <li>Delší <b>film z&nbsp;YouTube nebo Vimea</b> přidáte tlačítkem <span class="tl">+ Přidat odkaz na video</span>: vložte odkaz, název a&nbsp;kdo ho natočil. Na webu se pustí až po kliknutí.</li>
+      </ul>
+      <div class="dvojice">
+        <figure><a href="img/11-video-ukazka.jpg"><img src="img/11-video-ukazka.jpg" alt="Nahraná video ukázka a pole Autor ukázky" width="1600" height="1000" loading="lazy"></a><figcaption>Převedená ukázka a&nbsp;vedle ní, kdo ji natočil.</figcaption></figure>
+        <figure><a href="img/12-video-odkaz.jpg"><img src="img/12-video-odkaz.jpg" alt="Odkaz na film na YouTube s názvem a autorem" width="1600" height="1000" loading="lazy"></a><figcaption>Odkaz na film: odkaz, název a&nbsp;kdo ho natočil.</figcaption></figure>
+      </div>
+    </li>
+
+    <li id="ulozit">
+      <h2 class="krok-hlava">Zapněte projekt a&nbsp;uložte</h2>
+      <ul class="body">
+        <li>Dole v&nbsp;části <b>Zveřejnění</b> zapněte přepínač <b>Zveřejněno na webu</b>.</li>
+        <li>Pak klikněte na <span class="tl">Uložit</span> v&nbsp;liště dole. Objeví se zpráva „Uloženo. Na webu to bude po zveřejnění.“</li>
+        <li>Najdete tu i <b>Připnout nahoru</b> (projekt bude v&nbsp;seznamech první), <b>Otevřít na webu</b> a <b>Smazat projekt</b>. Tlačítko <b>Vrátit poslední změnu</b> vrátí, co jste naposledy uložili.</li>
+      </ul>
+      <figure><a href="img/10-ulozeno.jpg"><img src="img/10-ulozeno.jpg" alt="Zapnutý přepínač Zveřejněno na webu, tlačítko Vrátit poslední změnu a zpráva Uloženo" width="1600" height="1000" loading="lazy"></a><figcaption>Zapnuto a&nbsp;uloženo. Na webu se to ukáže po zveřejnění (krok 10).</figcaption></figure>
+    </li>
+
+    <li id="uvodni-pas">
+      <h2 class="krok-hlava">Vyberte projekty na úvodní stránku</h2>
+      <ul class="body">
+        <li><b>Úvodní pás</b> je velká fotka úplně nahoře na hlavní stránce. Projekty se v&nbsp;něm po pár vteřinách střídají a&nbsp;ten první uvidí každý návštěvník jako první.</li>
+        <li>Klikněte nahoře na <b>Úvodní pás</b> a&nbsp;pak na <span class="tl">+ Přidat projekt</span>. Napište kousek názvu a&nbsp;projekt vyberte. Přidá se na konec.</li>
+        <li>Šipkami nahoru a&nbsp;dolů ho posunete, kam chcete. Na počítači můžete kartu i&nbsp;přetáhnout.</li>
+        <li><span class="tl">Vzhled</span> vybere, která fotka se ukáže, a&nbsp;zapne nebo vypne video ukázku. <b>Odebrat</b> projekt z&nbsp;pásu vyndá, na webu ale zůstane.</li>
+        <li>Vpravo vidíte náhled hlavní stránky a&nbsp;pod ním <b>Střídání</b>: jak dlouho zůstane každý projekt. Všechno v&nbsp;této části se ukládá samo.</li>
+      </ul>
+      <figure><a href="img/14-pas-prvni.jpg"><img src="img/14-pas-prvni.jpg" alt="Úvodní pás: nový projekt na prvním místě a vpravo náhled hlavní stránky" width="1600" height="1000" loading="lazy"></a><figcaption>Nový projekt je první a&nbsp;náhled vpravo ukazuje, jak začne hlavní stránka.</figcaption></figure>
+      <div class="dvojice">
+        <figure><a href="img/13-pas-pridat.jpg"><img src="img/13-pas-pridat.jpg" alt="Okno Přidat do úvodního pásu s hledáním a nalezeným projektem" width="1232" height="558" loading="lazy"></a><figcaption>Přidání projektu do pásu.</figcaption></figure>
+        <figure><a href="img/15-pas-vzhled.jpg"><img src="img/15-pas-vzhled.jpg" alt="Okno Vzhled v úvodním pásu: přepínač video ukázky a výběr fotky" width="1600" height="807" loading="lazy"></a><figcaption>Vzhled: video ukázka a&nbsp;fotka.</figcaption></figure>
+      </div>
+    </li>
+
+    <li id="rady">
+      <h2 class="krok-hlava">Seřaďte řady na hlavní stránce</h2>
+      <ul class="body">
+        <li>Pod úvodním pásem jsou řady karet, třeba Nejnovější nebo Realizace. Najdete je nahoře v&nbsp;části <b>Řady</b>.</li>
+        <li>Šipkami změníte pořadí řad, přepínačem řadu schováte. Když řadu rozkliknete, přejmenujete ji nebo změníte tvar karet.</li>
+        <li>Tlačítkem <span class="tl">Přidat vlastní řadu</span> založíte řadu, do které projekty vyberete sami, třeba „Krkonoše“.</li>
+        <li>Projekty se v&nbsp;řadách řadí podle roku, od nejnovějšího. Připnutý projekt jde první všude kromě řady Nejnovější.</li>
+      </ul>
+      <figure><a href="img/29-radky.jpg"><img src="img/29-radky.jpg" alt="Řady na hlavní stránce s přepínači a šipkami" width="1600" height="1000" loading="lazy"></a><figcaption>Řady v&nbsp;pořadí shora dolů, jak jsou na hlavní stránce.</figcaption></figure>
+    </li>
+
+    <li id="atelier">
+      <h2 class="krok-hlava">Upravte stránku Ateliér</h2>
+      <ul class="body">
+        <li>V&nbsp;části <b>Ateliér</b> změníte úvodní text, životopis, výuku, tým, spolupracovníky, ocenění, výstavy, přednášky, poroty, fotografy i&nbsp;údaje v&nbsp;patičce webu.</li>
+        <li>Nový řádek přidáte tlačítkem <span class="tl">+ Přidat…</span> (třeba + Přidat výstavu), křížkem ho odeberete a&nbsp;šipkami posunete.</li>
+        <li>Nakonec klikněte na <span class="tl">Uložit</span>.</li>
+      </ul>
+      <div class="dvojice">
+        <figure><a href="img/27-atelier.jpg"><img src="img/27-atelier.jpg" alt="Ateliér ve správě: úvodní text stránky" width="1600" height="1000" loading="lazy"></a><figcaption>Úvodní text stránky Ateliér.</figcaption></figure>
+        <figure><a href="img/28-atelier-vystava.jpg"><img src="img/28-atelier-vystava.jpg" alt="Nová výstava: název, místo a tlačítko Přidat výstavu" width="1600" height="1000" loading="lazy"></a><figcaption>Nová výstava: rok, název a&nbsp;místo.</figcaption></figure>
+      </div>
+    </li>
+
+    <li id="zverejnit">
+      <h2 class="krok-hlava">Zveřejněte změny</h2>
+      <ul class="body">
+        <li>Až budete se změnami spokojený, klikněte vpravo nahoře na <span class="tl">Zveřejnit</span>.</li>
+        <li>Asi za minutu se ukáže „Hotovo, web je aktuální“. Mezitím můžete klidně pracovat dál.</li>
+        <li>Tlačítko <b>Otevřít web</b> ukáže výsledek: hlavní stránka začíná projektem, který jste dali v&nbsp;pásu na první místo.</li>
+      </ul>
+      <div class="dvojice">
+        <figure><a href="img/16-zverejnit.jpg"><img src="img/16-zverejnit.jpg" alt="Tlačítko Zveřejnit vpravo nahoře" width="1600" height="1000" loading="lazy"></a><figcaption>Zveřejnit vpravo nahoře.</figcaption></figure>
+        <figure><a href="img/17-zverejneno.jpg"><img src="img/17-zverejneno.jpg" alt="Zpráva Hotovo, web je aktuální s tlačítkem Otevřít web" width="1600" height="1000" loading="lazy"></a><figcaption>Hotovo: změny teď vidí každý, kdo web otevře.</figcaption></figure>
+      </div>
+      <figure><a href="img/18-web-domu.jpg"><img src="img/18-web-domu.jpg" alt="Hlavní stránka webu začíná novým projektem" width="1600" height="1000" loading="lazy"></a><figcaption>Výsledek na webu.</figcaption></figure>
+    </li>
+
+    <li id="oprava">
+      <h2 class="krok-hlava">Opravte projekt, který už na webu je</h2>
+      <ul class="body">
+        <li>V <b>Projektech</b> najdete projekt hledáním (podle názvu, města, roku nebo autora) a&nbsp;otevřete ho.</li>
+        <li>Změňte, co potřebujete. Dole se objeví lišta <b>Neuložené změny</b>: <span class="tl">Uložit</span> změny uloží, <span class="tl">Zahodit</span> je zahodí.</li>
+        <li>Když od rozdělané úpravy odejdete, správa se zeptá, jestli ji chcete uložit. Pak už jen zveřejnit (krok 10).</li>
+      </ul>
+      <figure><a href="img/21-uprava-textu.jpg"><img src="img/21-uprava-textu.jpg" alt="Upravený perex a lišta Neuložené změny s tlačítky Zahodit a Uložit" width="1600" height="1000" loading="lazy"></a><figcaption>Rozdělanou úpravu hlídá lišta dole.</figcaption></figure>
+    </li>
+
+    <li id="telefon">
+      <h2 class="krok-hlava">V&nbsp;mobilu</h2>
+      <ul class="body">
+        <li>V&nbsp;mobilu funguje všechno stejně, jen části najdete ve spodní liště. Fotky nahrajete rovnou z&nbsp;galerie telefonu.</li>
+        <li>Pořadí v&nbsp;úvodním pásu změníte šipkami, nebo kartu podržíte prstem a&nbsp;přetáhnete.</li>
+      </ul>
+      <figure><a href="img/30-telefon.jpg"><img src="img/30-telefon.jpg" alt="Správa webu v mobilu: úvodní pás, projekty a úprava projektu" width="1414" height="996" loading="lazy"></a><figcaption>Úvodní pás, Projekty a&nbsp;úprava projektu v&nbsp;mobilu.</figcaption></figure>
+    </li>
+  </ol>
+
+  <section class="konec" aria-labelledby="kdyz">
+    <h2 id="kdyz">Když se něco nepovede</h2>
+    <dl>
+      <div><dt>Nejde uložit a&nbsp;lišta píše „Opravte 1 věc“</dt><dd>U&nbsp;pole je červeně napsané, co chybí, třeba kdo video natočil, nebo že je perex moc dlouhý. Klikněte na Ukázat, opravte to a&nbsp;uložte znovu.</dd></div>
+      <div><dt>Uložil jsem něco omylem</dt><dd>Klikněte na Vrátit poslední změnu (dole v&nbsp;projektu nebo v&nbsp;Ateliéru). Vrátí se předchozí verze. Na webu se oprava ukáže po zveřejnění.</dd></div>
+      <div><dt>Smazal jsem projekt</dt><dd>Najdete ho úplně dole v&nbsp;Projektech, mezi smazanými projekty. Klikněte na Obnovit a&nbsp;vrátí se i&nbsp;s fotkami.</dd></div>
+      <div><dt>Změny na webu nevidím</dt><dd>Zkontrolujte, že je projekt zapnutý (Zveřejněno na webu) a&nbsp;že jste klikli na Zveřejnit. Do úvodního pásu potřebuje projekt aspoň jednu fotku.</dd></div>
+      <div><dt>Někdo upravoval totéž na jiném zařízení</dt><dd>Správa se zeptá, jestli načíst novější verzi, nebo uložit tu vaši. Ta druhá zůstane v&nbsp;historii.</dd></div>
+      <div><dt>Heslo nesedí</dt><dd>Po deseti špatných pokusech přihlášení čtvrt hodiny počká. Kdybyste heslo zapomněl, napište nám a&nbsp;pošleme ho znovu.</dd></div>
+    </dl>
+    <figure class="stred"><a href="img/31-kos.jpg"><img src="img/31-kos.jpg" alt="Smazané projekty dole v Projektech s tlačítkem Obnovit" width="1600" height="1000" loading="lazy"></a><figcaption>Smazané projekty a&nbsp;tlačítko Obnovit.</figcaption></figure>
+    <p class="paticka">Stejné rady najdete stručně i&nbsp;přímo ve správě, v&nbsp;části Jak na to.</p>
+  </section>
+</div>
+</body>
+</html>
